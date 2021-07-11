@@ -19,7 +19,7 @@
     <body>
         <header class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-light bg-1 row">
-                <a class="brand col-lg-2 col-sm-4 py-2">Library Catalog</a>
+                <a class="brand col-lg-2 col-sm-4 py-2" href="/">Library Catalog</a>
 
                 <div class="col-lg-8 col-sm-8">
                     <form class="d-flex search-box p-1" action="/search" method="get">
@@ -28,14 +28,14 @@
                     </form>
                 </div>
 
-                {% if logged_in %}
+                {% if session.get('user_id') != None %}
                 <div class="dropdown profile-btn col-lg-2 col-sm-12 py-2">
                     <button class="btn-transparent w-100 h-100" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Profile
                     </button>
                     <ul class="dropdown-menu shadow border-sharp" aria-labelledby="profileDropdown">
-                        <li><h6 class="dropdown-item text-decoration-none fw-bold">{{ username }}</h6></li>
-                        <li><a class="dropdown-item" href="/user/{{ username }}">My Profile</a></li>
+                        <li><h6 class="dropdown-item text-decoration-none fw-bold">{{ session.get('username') }}</h6></li>
+                        <li><a class="dropdown-item" href="/user/{{ session.get('username') }}">My Profile</a></li>
                         <li><a class="dropdown-item" href="#">My Books</a></li>
                         <hr>
                         <li><a class="dropdown-item" href="/logout">Log out</a></li>
@@ -63,7 +63,7 @@
             </div>
         </footer>
 
-        {% if not logged_in %}
+        {% if not session.get('user_id') != None %}
         <div class="modal fade" id="login_modal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content border-sharp">

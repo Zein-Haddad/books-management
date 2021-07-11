@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{% endblock %}
+
+{% block main %}
+    <div class="row my-2">
+        <div class="col-lg-8 col-sm-12">
+            <h3 class="book-title">{{ book['title'] }}</h3>
+            <p class="text-muted fs-5">by {{ book['author'] }}, {{ book['num_pages'] }} pages</p>
+            <table class="w-100">
+                <tr>
+                    <td>Publisher</td>
+                    <td>{{ book['publisher'] }}</td>
+                </tr>
+                <tr>
+                    <td>ISBN</td>
+                    <td>{{ book['isbn'] }}</td>
+                </tr>
+                <tr>
+                    <td>ISBN13</td>
+                    <td>{{ book['isbn13'] }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <p class="fw-bold">Readers also enjoyed</p>
+        </div>
+    </div>
+    <hr>
+    <div class="row my-3">
+        <h3>Reviews</h3>
+    </div>
+{% endblock %}

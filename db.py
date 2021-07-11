@@ -13,5 +13,12 @@ def get_random_books(num):
     return result
 
 
+def get_book(book_id):
+    with sqlite3.connect(DB) as con:
+        con.row_factory = sqlite3.Row
+        cur = con.cursor()
+        cur.execute("SELECT * FROM books WHERE id = ?", [book_id])
+        return cur.fetchall()
+
 def search_books(query):
     pass

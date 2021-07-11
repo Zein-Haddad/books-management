@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, redirect, session, request
-from db import DB, get_random_books
+from db import DB, get_random_books, get_book
 
 import users
 
@@ -10,14 +10,10 @@ app.secret_key = 'xBv9U-GlcVP5VclXTyCuggKTzf2W6XPNJtrCiSJb-PE'
 
 @app.route("/")
 def index():
-    # Check if the user is logged in
-    logged_in = session.get('user_id') != None
-    username = session.get('username')
-    
     # Get random books
     random_books = get_random_books(5)
 
-    return render_template("index.html", logged_in=logged_in, random_books=random_books, username=username)
+    return render_template("index.html", random_books=random_books)
 
 
 @app.route("/login", methods=["POST"])
@@ -56,7 +52,14 @@ def error():
 
 @app.route("/book/<int:book_id>")
 def book(book_id):
-    return "TODO"
+    if book_id == None:
+        return redirect("/error")
+
+    book = get_book(book_id)
+    if len(book) == 0:
+        return redirect("/error")
+    else:
+        return render_template("book.html", book=book[0])
 
 
 @app.route("/user/<username>")
