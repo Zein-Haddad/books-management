@@ -99,10 +99,10 @@ const request = (() => {
     return {form_login, form_register}
 })();
 
-document.querySelector("#login").addEventListener('click', (evt) => {
+let login_btn = document.querySelector("#login");
+login_btn.addEventListener('click', () => {
     // Disable the button
-    let btn = evt.target;
-    btn.disabled = true;
+    login_btn.disabled = true;
 
     // Get data from form
     let username = document.querySelector("#login-username").value;
@@ -112,12 +112,12 @@ document.querySelector("#login").addEventListener('click', (evt) => {
     request.form_login(username, password);
 
     // Enable the button
-    btn.disabled = false;
+    login_btn.disabled = false;
 });
 
-document.querySelector("#register").addEventListener('click', (evt) => {
-    let btn = evt.target;
-    btn.disabled = true;
+let register_btn = document.querySelector("#register");
+register_btn.addEventListener('click', (evt) => {
+    register_btn.disabled = true;
 
     let username = document.querySelector("#register-username").value;
     let email = document.querySelector("#register-email").value;
@@ -126,11 +126,26 @@ document.querySelector("#register").addEventListener('click', (evt) => {
 
     request.form_register(username, email, password, confirmation);
 
-    btn.disabled = false;
-})
+    register_btn.disabled = false;
+});
 
 document.querySelectorAll(".alert").forEach((elem) => {
     elem.addEventListener('click', (evt) => {
         evt.target.style.display = 'none';
     })
 });
+
+// Enter = 13
+document.onkeyup = (e) => {
+    if (e.keyCode === 13)
+    {
+        if (document.activeElement.name === 'login')
+        {
+            login_btn.click();
+        }
+        else if (document.activeElement.name === 'register')
+        {
+            register_btn.click();
+        }
+    }
+}

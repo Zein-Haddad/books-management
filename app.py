@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, redirect, session, request
-from db import DB, get_random_books, get_book
+from db import DB, get_random_books, get_book, search_books
 
 import users
 
@@ -65,6 +65,16 @@ def book(book_id):
 @app.route("/user/<username>")
 def user(username):
     return "TODO"
+
+
+@app.route("/search")
+def search():
+    q = request.args.get('q')
+    if not q:
+        return redirect("/")
+    
+    results = search_books(q)
+    return render_template('search.html', results=results, q=q)
 
 
 if __name__ == '__main__':
