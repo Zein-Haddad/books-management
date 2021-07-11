@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <section class="col-lg-4 col-sm-12" {% if not logged_in %} style="display: none;" {% endif %}>
+            <h4 class="my-2">Currently Reading</h4>
+        </section>
+        <section class="{% if logged_in %} col-lg-8 {% else %} col-lg-12 {% endif %} col-sm-12">
+            <h4 class="my-2">Recommendations</h4>
+            {% for book in random_books %}
+                <div class="p-2 w-100">
+                    <h5><a class="book-title" href="#">{{ book['title'] }}</a></h5>
+                    <p class="text-muted fs-6">by {{ book['author'] }}</p>
+                </div>
+                <hr>
+            {% endfor %}
+        </section>
+    </div>
+{% endblock %}

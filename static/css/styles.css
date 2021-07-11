@@ -1,0 +1,105 @@
+body {
+    background-color: #F9F7F4;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.1rem;
+    max-width: 100%;
+}
+
+.bg-1 {
+    background-color: #F4F1EA !important;
+}
+
+.bg-2 {
+    background-color: #382110 !important;
+}
+
+.bg-3 {
+    background-color: #E4F4DA !important;
+}
+
+.brand {
+    font-size: 1.25rem;
+    text-decoration: none;
+    white-space: nowrap;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.brand:hover, .brand:focus {
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.search-box {
+    background-color: #FFFFFF;
+}
+
+.input-search {
+    border: none;
+}
+
+.input-search:focus {
+    border: none;
+    outline: none;
+}
+
+.input-btn {
+    background-color: #FFFFFF;
+    border: none;
+}
+
+.btn-1 {
+    background-color: #F4F1EA;
+    border: none;
+    width: 100%;
+    padding: 1rem;
+}
+
+.btn-1:hover {
+    background-color: #382110;
+    color: #FFFFFF;
+}
+
+.btn-transparent {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+.profile-btn:hover {
+    background-color: #382110;
+    cursor: pointer;
+}
+
+.profile-btn:hover button {
+    color: #FFFFFF !important;
+}
+
+.dropdown-menu {
+    width: 100%;
+}
+
+.dropdown-item:hover {
+    background-color: #FFFFFF;
+    text-decoration: underline;
+}
+
+.border-sharp {
+    border-radius: 0;
+}
+
+.book-title {
+    text-decoration: none;
+    color: black;
+}
+
+.book-title:hover, .book-title:visited {
+    color: black;
+}
+
+.alert:hover {
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 576px) {
+    .dropdown-menu {
+        width: 100%;
+    }
+}
