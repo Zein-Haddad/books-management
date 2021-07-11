@@ -12,7 +12,7 @@ Status code:
 '''
 def login(username, password):
     if not username or not password:
-        return 2
+        return {'status': 2}
 
     with sqlite3.connect(DB) as con:
         con.row_factory = sqlite3.Row
@@ -21,9 +21,9 @@ def login(username, password):
         result = cur.fetchall()
 
     if len(result) != 1 or not check_password_hash(result[0]['password'], password):
-        return 1
+        return {'status': 1}
     else:
-        return 0
+        return {'status': 0, 'user_id': result[0]['id']}
 
 
 '''
@@ -55,7 +55,3 @@ def register(username, email, password, confirmation):
         con.commit()
     
     return 0
-
-
-def is_logged_in():
-    pass

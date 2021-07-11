@@ -19,7 +19,7 @@
     <body>
         <header class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-light bg-1 row">
-                <a class="brand col-lg-2 col-sm-4 py-2">Goodreads</a>
+                <a class="brand col-lg-2 col-sm-4 py-2">Library Catalog</a>
 
                 <div class="col-lg-8 col-sm-8">
                     <form class="d-flex search-box p-1" action="/search" method="get">
@@ -34,8 +34,11 @@
                         Profile
                     </button>
                     <ul class="dropdown-menu shadow border-sharp" aria-labelledby="profileDropdown">
+                        <li><h6 class="dropdown-item text-decoration-none fw-bold">{{ username }}</h6></li>
+                        <li><a class="dropdown-item" href="/user/{{ username }}">My Profile</a></li>
                         <li><a class="dropdown-item" href="#">My Books</a></li>
-                        <li><a class="dropdown-item" href="#">Log out</a></li>
+                        <hr>
+                        <li><a class="dropdown-item" href="/logout">Log out</a></li>
                     </ul>
                 </div>
                 {% else %}
@@ -56,7 +59,7 @@
 
         <footer class="container-fluid bg-1">
             <div class="w-100 h-100 p-2">
-                <p class="text-muted fs-6">&#169; 2021 Goodreads, inc</p>
+                <p class="text-muted fs-6">&#169; 2021 Lorem Ipsum</p>
             </div>
         </footer>
 
@@ -108,6 +111,7 @@
                         <div class="mb-3">
                             <input type="password" id="register-confirmation" Placeholder="Confirm Password" class="form-control">
                         </div>
+                        <p class="text-info"><a class="fs-6 text-reset text-decoration-none" target="_blank" href="https://xkcd.com/936/">How to make good password</a></p>
                     </div>
                     <div class="w-100">
                         <button class="btn-1" id="register">Register</button>
