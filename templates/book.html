@@ -9,6 +9,18 @@
         <div class="col-lg-8 col-sm-12">
             <h3 class="book-title">{{ book['title'] }}</h3>
             <p class="text-muted fs-5">by {{ book['author'] }}, {{ book['num_pages'] }} pages</p>
+            {% if session.get('user_id') != None %}
+            <div class="btn-group book-action">
+                <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Want to Read
+                </button>
+                <ul class="dropdown-menu border-sharp shadow">
+                    <li><button type="button" class="dropdown-item book-action-item">Want to Read</button></li>
+                    <li><button type="button" class="dropdown-item book-action-item">Currently Reading</button></li>
+                    <li><button type="button" class="dropdown-item book-action-item">Read</button></li>
+                </ul>
+            </div>
+            {% endif %}
             <table class="w-100">
                 <tr>
                     <td>Publisher</td>
@@ -32,4 +44,6 @@
     <div class="row my-3">
         <h3>Reviews</h3>
     </div>
+
+    <script src="{{ url_for('static', filename='js/books.js') }}"></script>
 {% endblock %}

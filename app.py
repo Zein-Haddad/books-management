@@ -67,6 +67,13 @@ def user(username):
     return "TODO"
 
 
+@app.route("/my_books")
+def my_books():
+    if session.get('user_id') == None:
+        return redirect("/")
+    return "TODO"
+
+
 @app.route("/search")
 def search():
     q = request.args.get('q')

@@ -94,6 +94,20 @@ body {
     color: black;
 }
 
+.book-action:hover .dropdown-menu {
+    display: block;
+    position: absolute;
+    inset: 0px auto auto 0px;
+    margin: 0px;
+    transform: translate(0px, 39px);
+}
+
+.book-action-item:hover {
+    cursor: pointer;
+    text-decoration: none;
+    background-color: #D8D8D8;
+}
+
 .alert:hover {
     cursor: pointer;
 }
