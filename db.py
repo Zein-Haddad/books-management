@@ -44,6 +44,26 @@ def get_saved_books(user_id):
     return books
 
 
+'''
+if success return true, otherwise return false
+'''
+def update_book(book_id, user_id, status):
+    with sqlite3.connect(DB) as con:
+        con.row_factory = sqlite3.Row
+        cur = con.cursor()
+        cur.execute("SELECT * FROM saved_books WHERE book_id = ? AND user_id = ?", [book_id, user_id])
+        result = cur.fetchall()
+
+        if len(result) == 0:
+            cur.execute("INSERT INTO saved_books (book_id, user_id, status) VALUES (?, ?, ?)", [book_id, user_id, status])
+            con.commit()
+            return True
+        else:
+            cur.execute("UPDATE saved_books SET status = ? WHERE book_id = ? AND user_id = ?", [status, book_id, user_id])
+            con.commit()
+            return True
+
+
 def search_books(query):
     with sqlite3.connect(DB) as con:
         con.row_factory = sqlite3.Row

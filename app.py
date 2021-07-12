@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, redirect, session, request
-from db import DB, get_random_books, get_book, search_books, get_saved_books
+from db import DB, get_random_books, get_book, search_books, get_saved_books, update_book
 
 import users
 
@@ -13,7 +13,7 @@ def index():
     # Get random books
     random_books = get_random_books(5)
 
-    return render_template("index.html", random_books=random_books)
+    return render_template("index.html", random_books=random_books, saved_books=get_saved_books(session.get('user_id')))
 
 
 @app.route("/login", methods=["POST"])
@@ -59,8 +59,7 @@ def book(book_id):
     if len(book) == 0:
         return redirect("/error")
     else:
-        saved_books = get_saved_books(session.get('user_id'))
-        return render_template("book.html", book=book[0], saved_books=saved_books)
+        return render_template("book.html", book=book[0], saved_books=get_saved_books(session.get('user_id')))
 
 
 @app.route("/user/<username>")
@@ -82,7 +81,19 @@ def search():
         return redirect("/")
     
     results = search_books(q)
-    return render_template('search.html', results=results, q=q)
+    return render_template('search.html', results=results, q=q, saved_books=get_saved_books(session.get('user_id')))
+
+
+@app.route("/update_books", methods=["POST"])
+def update():
+    book_id = request.form.get('book_id')
+    user_id = session.get('user_id')
+    status = request.form.get('status')
+
+    if not book_id or not user_id or not status:
+        return jsonify(result=False)
+
+    return jsonify(result=update_book(book_id, user_id, status))
 
 
 if __name__ == '__main__':
