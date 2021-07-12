@@ -11,13 +11,19 @@
             <p class="text-muted fs-5">by {{ book['author'] }}, {{ book['num_pages'] }} pages</p>
             {% if session.get('user_id') != None %}
             <div class="btn-group book-action">
-                <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Want to Read
+                <button type="button" class="btn {% if book['id'] in saved_books %} btn-primary {% else %} btn-success {% endif %} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if saved_books.get(book['id']) == 2 %}
+                        Currently Reading
+                    {% elif saved_books.get(book['id']) == 3 %}
+                        Read
+                    {% else %}
+                        Want to Read
+                    {% endif %}
                 </button>
                 <ul class="dropdown-menu border-sharp shadow">
-                    <li><button type="button" class="dropdown-item book-action-item">Want to Read</button></li>
-                    <li><button type="button" class="dropdown-item book-action-item">Currently Reading</button></li>
-                    <li><button type="button" class="dropdown-item book-action-item">Read</button></li>
+                    <li><button type="button" class="dropdown-item book-action-item {% if saved_books.get(book['id']) == 1 %} active suppress-hover {% endif %}" {% if saved_books.get(book['id']) != 1 %} book-action-item book_id="{{ book['id'] }}" {% endif %} status="1">Want to Read</button></li>
+                    <li><button type="button" class="dropdown-item book-action-item {% if saved_books.get(book['id']) == 2 %} active suppress-hover {% endif %}" {% if saved_books.get(book['id']) != 2 %} book-action-item book_id="{{ book['id'] }}" {% endif %} status="2">Currently Reading</button></li>
+                    <li><button type="button" class="dropdown-item book-action-item {% if saved_books.get(book['id']) == 3 %} active suppress-hover {% endif %}" {% if saved_books.get(book['id']) != 3 %} book-action-item book_id="{{ book['id'] }}" {% endif %} status="3">Read</button></li>
                 </ul>
             </div>
             {% endif %}

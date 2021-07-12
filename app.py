@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, redirect, session, request
-from db import DB, get_random_books, get_book, search_books
+from db import DB, get_random_books, get_book, search_books, get_saved_books
 
 import users
 
@@ -59,7 +59,8 @@ def book(book_id):
     if len(book) == 0:
         return redirect("/error")
     else:
-        return render_template("book.html", book=book[0])
+        saved_books = get_saved_books(session.get('user_id'))
+        return render_template("book.html", book=book[0], saved_books=saved_books)
 
 
 @app.route("/user/<username>")
