@@ -9,18 +9,21 @@ const request = (() => {
             body: new URLSearchParams({
                 'book_id': book_id,
                 'status': status
-            }).then((response) => {
-                if (response.status != 200)
-                {
-                    console.log(response.statusText);
-                }
-                response.json().then((data) => {
-
-                });
-            }).catch((error) => {
-                console.log(error);
             })
-        });
+        }).then((response) => {
+            if (response.status != 200)
+            {
+                console.log(response.statusText);
+            }
+            response.json().then((data) => {
+                if (data.result === true)
+                {
+                    location.reload();
+                }
+            });
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     const delete_book = (book_id) => {

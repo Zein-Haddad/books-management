@@ -14,12 +14,12 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
-        <title>Catalog{% block title %}{% endblock %}</title>
+        <title>Books{% block title %}{% endblock %}</title>
     </head>
     <body>
         <header class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-light bg-1 row">
-                <a class="brand col-lg-2 col-sm-4 py-2" href="/">Library Catalog</a>
+                <a class="brand col-lg-2 col-sm-4 py-2" href="/">Books</a>
 
                 <div class="col-lg-8 col-sm-8">
                     <form class="d-flex search-box p-1" action="/search" method="get">
