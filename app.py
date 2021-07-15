@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, redirect, session, request
-from db import DB, get_random_books, get_book, search_books, get_saved_books, update_book
+from db import DB, get_random_books, get_book, search_books, get_saved_books, update_book, delete_book
 
 import users
 
@@ -84,7 +84,7 @@ def search():
     return render_template('search.html', results=results, q=q, saved_books=get_saved_books(session.get('user_id')))
 
 
-@app.route("/update_books", methods=["POST"])
+@app.route("/update_book", methods=["POST"])
 def update():
     book_id = request.form.get('book_id')
     user_id = session.get('user_id')
@@ -94,6 +94,17 @@ def update():
         return jsonify(result=False)
 
     return jsonify(result=update_book(book_id, user_id, status))
+
+
+@app.route("/delete_book", methods=["POST"])
+def delete():
+    book_id = request.form.get('book_id')
+    user_id = session.get('user_id')
+
+    if not user_id or not book_id:
+        return jsonify(result=False)
+
+    return jsonify(result=delete_book(book_id, user_id))
 
 
 if __name__ == '__main__':

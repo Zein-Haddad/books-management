@@ -1,17 +1,19 @@
 <div class="btn-group book-action">
     <button type="button" class="btn {% if book['id'] in saved_books %} btn-primary {% else %} btn-success {% endif %} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        {% if saved_books.get(book['id']) == 2 %}
-            Currently Reading
+        {% if saved_books.get(book['id']) == 1 %}
+            <i class="bi bi-check"></i> Want to Read
+        {% elif saved_books.get(book['id']) == 2 %}
+            <i class="bi bi-check"></i> Currently Reading
         {% elif saved_books.get(book['id']) == 3 %}
-            Read
+            <i class="bi bi-check"></i> Read
         {% else %}
             Want to Read
         {% endif %}
     </button>
     <ul class="dropdown-menu border-sharp shadow">
-        <li><button type="button" class="dropdown-item book-action-item {% if saved_books.get(book['id']) == 1 %} active suppress-hover {% endif %}" {% if saved_books.get(book['id']) != 1 %} name="book-action-item" book_id="{{ book['id'] }}" {% endif %} status="1">Want to Read</button></li>
-        <li><button type="button" class="dropdown-item book-action-item {% if saved_books.get(book['id']) == 2 %} active suppress-hover {% endif %}" {% if saved_books.get(book['id']) != 2 %} name="book-action-item" book_id="{{ book['id'] }}" {% endif %} status="2">Currently Reading</button></li>
-        <li><button type="button" class="dropdown-item book-action-item {% if saved_books.get(book['id']) == 3 %} active suppress-hover {% endif %}" {% if saved_books.get(book['id']) != 3 %} name="book-action-item" book_id="{{ book['id'] }}" {% endif %} status="3">Read</button></li>
+        <li><button type="button" class="dropdown-item book-action-item {% if saved_books.get(book['id']) == 1 %} active suppress-hover {% endif %}" name="book-action-item" book_id="{{ book['id'] }}" status="1">Want to Read</button></li>
+        <li><button type="button" class="dropdown-item book-action-item {% if saved_books.get(book['id']) == 2 %} active suppress-hover {% endif %}" name="book-action-item" book_id="{{ book['id'] }}" status="2">Currently Reading</button></li>
+        <li><button type="button" class="dropdown-item book-action-item {% if saved_books.get(book['id']) == 3 %} active suppress-hover {% endif %}" name="book-action-item" book_id="{{ book['id'] }}" status="3">Read</button></li>
         {% if book['id'] in saved_books %} 
             <li><hr class="dropdown-divider"></li>
             <li><button type="button" class="dropdown-item book-action-item" name="book-action-delete" book_id="{{ book['id'] }}">Remove</button></li> 
