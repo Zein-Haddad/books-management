@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}
+: My books
+{% endblock %}
+
+{% block main %}
+    <div class="row my-4">
+        <div class="col-lg-4 col-sm-12">
+            <div class="list-group">
+                <button type="button" name="tab-action" tab-reference="want-to-read" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active">
+                    Want to Read <span class="badge bg-primary rounded-pill">{{ my_books[1]|length }}</span>
+                </button>
+                <button type="button" name="tab-action" tab-reference="currently-reading" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    Currently Reading <span class="badge bg-primary rounded-pill">{{ my_books[2]|length }}</span>
+                </button>
+                <button type="button" name="tab-action" tab-reference="read" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    Read <span class="badge bg-primary rounded-pill">{{ my_books[3]|length }}</span>
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-8 col-sm-12">
+            <div id="want-to-read" name="tab" class="d-block">
+                {% for book in my_books[1] %}
+                    <div class="p-2 w-100">
+                        <h5><a class="book-title" href="/book/{{ book['id'] }}">{{ book['title'] }}</a></h5>
+                        <p class="text-muted">by {{ book['author'] }}</p>
+                        {% include 'book_btn.html' %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div id="currently-reading" name="tab" class="d-none">
+                {% for book in my_books[2] %}
+                    <div class="p-2 w-100">
+                        <h5><a class="book-title" href="/book/{{ book['id'] }}">{{ book['title'] }}</a></h5>
+                        <p class="text-muted">by {{ book['author'] }}</p>
+                        {% include 'book_btn.html' %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div id="read" name="tab" class="d-none">
+                {% for book in my_books[3] %}
+                    <div class="p-2 w-100">
+                        <h5><a class="book-title" href="/book/{{ book['id'] }}">{{ book['title'] }}</a></h5>
+                        <p class="text-muted">by {{ book['author'] }}</p>
+                        {% include 'book_btn.html' %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/my_books.js') }}"></script>
+{% endblock %}

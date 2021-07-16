@@ -44,6 +44,23 @@ def get_saved_books(user_id):
     return books
 
 
+def get_my_books(user_id):
+    if not user_id:
+        return None
+    
+    with sqlite3.connect(DB) as con:
+        con.row_factory = sqlite3.Row
+        cur = con.cursor()
+        cur.execute("SELECT * FROM saved_books JOIN books ON saved_books.book_id = books.id WHERE user_id = ?", [user_id])
+        result = cur.fetchall()
+
+    my_books = {1: [], 2: [], 3: []}
+    for row in result:
+        my_books[row['status']].append(row)
+    
+    return my_books
+
+
 '''
 if success return true, otherwise return false
 '''
