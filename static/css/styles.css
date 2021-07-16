@@ -108,6 +108,10 @@ body {
     background-color: #D8D8D8;
 }
 
+.star-hover:hover {
+    cursor: pointer;
+}
+
 .suppress-hover:hover {
     background-color: #0D6EFD;
     color: white;
@@ -115,6 +119,11 @@ body {
 
 .alert:hover {
     cursor: pointer;
+}
+
+.card {
+    border: none;
+    background-color: #F9F7F4;
 }
 
 @media only screen and (max-width: 576px) {

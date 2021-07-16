@@ -1,4 +1,4 @@
-const request = (() => {
+let request = (() => {
     const update_book = (book_id, status) => {
         return fetch('/update_book', {
             cache: 'no-cache',
