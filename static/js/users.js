@@ -89,6 +89,9 @@ const request = (() => {
                     case 4:
                         error_message.register("Passwords do not match");
                         break;
+                    case 5:
+                        error_message.register("Weak Password");
+                        break;
                 }
             });
         }).catch((error) => {
@@ -97,6 +100,93 @@ const request = (() => {
     }
 
     return {form_login, form_register}
+})();
+
+const password_checker = (() => {
+    const password_field = document.querySelector('#register-password');
+    const register_btn = document.querySelector('#register');
+    const span = {
+        'min-15': document.querySelector('[min-15-req]'),
+        'min-8': document.querySelector('[min-8-req]'),
+        'number': document.querySelector('[num-req]'),
+        'lowercase': document.querySelector('[lowercase-req]')
+    }
+
+    function check15char()
+    {
+        if (password_field.value.length >= 15)
+        {
+            span['min-15'].classList.add('text-success');
+            return true;
+        }
+        else
+        {
+            span['min-15'].classList.remove('text-success');
+            return false;
+        }
+    }
+
+    function check8char()
+    {
+        if (password_field.value.length >= 8)
+        {
+            span['min-8'].classList.add('text-success');
+            span['min-8'].classList.remove('text-danger');
+            return true;
+        }
+        else
+        {
+            span['min-8'].classList.add('text-danger');
+            span['min-8'].classList.remove('text-success');
+            return false;
+        }
+    }
+
+    function checknumber()
+    {
+        if (/[0-9]/.test(password_field.value))
+        {
+            span['number'].classList.add('text-success');
+            span['number'].classList.remove('text-danger');
+            return true;
+        }
+        else
+        {
+            span['number'].classList.add('text-danger');
+            span['number'].classList.remove('text-success');
+            return false;
+        }
+    }
+
+    function checklowercase()
+    {
+        if (/[a-z]/.test(password_field.value))
+        {
+            span['lowercase'].classList.add('text-success');
+            span['lowercase'].classList.remove('text-danger');
+            return true;
+        }
+        else
+        {
+            span['lowercase'].classList.add('text-danger');
+            span['lowercase'].classList.remove('text-success');
+            return false;
+        }
+    }
+
+    password_field.addEventListener('keyup', () => {
+        let c1 = check8char();
+        let c2 = checknumber();
+        let c3 = checklowercase();
+        if ((c1 && c2 && c3) || check15char())
+        {
+            register_btn.disabled = false;
+        }
+        else
+        {
+            register_btn.disabled = true;
+        }
+    });
 })();
 
 let login_btn = document.querySelector("#login");

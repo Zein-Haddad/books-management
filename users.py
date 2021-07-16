@@ -33,6 +33,7 @@ Status code:
 2 = Username already exists
 3 = Username contains spaces
 4 = Passwords do not match
+5 = Password not strong enough
 '''
 def register(username, email, password, confirmation):
     if not username or not email or not password or not confirmation:
@@ -43,6 +44,9 @@ def register(username, email, password, confirmation):
 
     if re.search(' ', username) != None:
         return 3
+
+    if not password_strength(password):
+        return 5
 
     with sqlite3.connect(DB) as con:
         cur = con.cursor()
@@ -55,3 +59,13 @@ def register(username, email, password, confirmation):
         con.commit()
     
     return 0
+
+
+def password_strength(password):
+    if len(password) < 15:
+        if len(password) < 8 or re.search('[a-z]', password) == None or re.search('[0-9]', password) == None:
+            return False
+        else:
+            return True
+    else:
+        return True
