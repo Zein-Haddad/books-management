@@ -11,10 +11,9 @@ app.secret_key = 'xBv9U-GlcVP5VclXTyCuggKTzf2W6XPNJtrCiSJb-PE'
 
 @app.route("/")
 def index():
-    # Get random books
     random_books = db.get_random_books(5)
 
-    return render_template("index.html", random_books=random_books, saved_books=db.get_saved_books(session.get('user_id')))
+    return render_template("index.html", random_books=random_books, saved_books=db.get_saved_books(session.get('user_id')), my_books=db.get_my_books(session.get('user_id')))
 
 
 @app.route("/login", methods=["POST"])
@@ -119,15 +118,38 @@ def delete():
 
 @app.route("/post_review", methods=["POST"])
 def post_review():
+    book_id = request.form.get('book_id')
     user_id = session.get('user_id')
     rating = request.form.get('rating')
     review = request.form.get('review')
-    book_id = request.form.get('book_id')
 
     if not user_id or not rating or not book_id:
         return jsonify(result=False)
     else:
         return jsonify(result=db.post_review(book_id, user_id, rating, review))
+
+
+@app.route("/edit_review", methods=["POST"])
+def edit_review():
+    book_id = request.form.get('book_id')
+    user_id = session.get('user_id')
+    rating = request.form.get('rating')
+    review = request.form.get('review')
+
+    if not user_id or not rating or not book_id:
+        return jsonify(result=False)
+    else:
+        return jsonify(result=db.edit_review(book_id, user_id, rating, review))
+
+
+@app.route("/delete_review")
+def delete_review():
+    book_id = request.args.get('book_id')
+    user_id = session.get('user_id')
+    if not book_id or not user_id:
+        return jsonify(result=False)
+    else:
+        return jsonify(result=db.delete_review(book_id, user_id))
 
 
 if __name__ == '__main__':

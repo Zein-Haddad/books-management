@@ -8,6 +8,18 @@
         {% if session.get('user_id') != None %}
         <section class="col-lg-4 col-sm-12">
             <h4 class="my-2">Currently Reading</h4>
+            {% if my_books[2]|length == 0 %}
+                <p class="fs-5">You are not reading any books</p>
+            {% endif %}
+
+            {% for book in my_books[2] %}
+            <div class="p-2 w-100">
+                <h5><a class="book-title" href="/book/{{ book['id'] }}">{{ book['title'] }}</a></h5>
+                <p class="text-muted fs-6">by {{ book['author'] }}</p>
+                {% include 'book_btn.html' %}
+            </div>
+            <hr>
+            {% endfor %}
         </section>
         {% endif %}
         <section class="{% if session.get('user_id') != None %} col-lg-8 {% else %} col-lg-12 {% endif %} col-sm-12">

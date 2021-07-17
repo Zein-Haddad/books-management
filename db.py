@@ -124,3 +124,27 @@ def post_review(book_id, user_id, rating, review):
             return True
     except:
         return False
+
+
+def edit_review(book_id, user_id, rating, review):
+    try:
+        with sqlite3.connect(DB) as con:
+            data = [rating, review, book_id, user_id]
+            cur = con.cursor()
+            cur.execute("UPDATE reviews SET rating = ?, review = ? WHERE book_id = ? AND user_id = ?", data)
+            con.commit()
+            return True
+    except:
+        return False
+
+
+def delete_review(book_id, user_id):
+    try:
+        with sqlite3.connect(DB) as con:
+            data = [book_id, user_id]
+            cur = con.cursor()
+            cur.execute("DELETE FROM reviews WHERE book_id = ? AND user_id = ?", data)
+            con.commit()
+            return True
+    except:
+        return False
