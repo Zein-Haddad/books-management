@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, redirect, session, request
+from functools import reduce
 
 import db
 import users
@@ -59,7 +60,15 @@ def book(book_id):
     if len(book) == 0:
         return redirect("/error")
     else:
-        return render_template("book.html", book=book[0], saved_books=db.get_saved_books(session.get('user_id')))
+        reviews = db.get_reviews(book_id)
+        if not reviews:
+            reviewers = []
+            avg_rating = 0
+        else:
+            reviewers = list(map(lambda row : row['user_id'], reviews))
+            avg_rating = round(reduce(lambda a, b : a + b, list(map(lambda row : row['rating'], reviews))) / len(reviews))
+
+        return render_template("book.html", book=book[0], saved_books=db.get_saved_books(session.get('user_id')), reviews=reviews, reviewers=reviewers, avg_rating=avg_rating)
 
 
 @app.route("/user/<username>")
@@ -106,6 +115,19 @@ def delete():
         return jsonify(result=False)
 
     return jsonify(result=db.delete_book(book_id, user_id))
+
+
+@app.route("/post_review", methods=["POST"])
+def post_review():
+    user_id = session.get('user_id')
+    rating = request.form.get('rating')
+    review = request.form.get('review')
+    book_id = request.form.get('book_id')
+
+    if not user_id or not rating or not book_id:
+        return jsonify(result=False)
+    else:
+        return jsonify(result=db.post_review(book_id, user_id, rating, review))
 
 
 if __name__ == '__main__':

@@ -101,3 +101,26 @@ def search_books(query):
         cur = con.cursor()
         cur.execute("SELECT * FROM books WHERE title LIKE ?", ['%' + query + '%'])
         return cur.fetchall()
+
+
+def get_reviews(book_id):
+    with sqlite3.connect(DB) as con:
+        con.row_factory = sqlite3.Row
+        cur = con.cursor()
+        cur.execute("SELECT * FROM reviews JOIN users ON reviews.user_id = users.id WHERE book_id = ?", [book_id])
+        return cur.fetchall()
+
+
+def post_review(book_id, user_id, rating, review):
+    if not user_id or not book_id or not rating:
+        return False
+
+    try:
+        with sqlite3.connect(DB) as con:
+            data = [book_id, user_id, rating, review]
+            cur = con.cursor()
+            cur.execute("INSERT INTO reviews (book_id, user_id, rating, review) VALUES (?, ?, ?, ?)", data)
+            con.commit()
+            return True
+    except:
+        return False

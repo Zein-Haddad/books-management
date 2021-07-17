@@ -5,10 +5,13 @@
 {% endblock %}
 
 {% block main %}
+    <script type="module" src="{{ url_for('static', filename='js/stars.js') }}"></script>
     <div class="row my-2">
         <div class="col-lg-8 col-sm-12">
             <h3 class="book-title">{{ book['title'] }}</h3>
-            <p class="text-muted fs-5">by {{ book['author'] }}, {{ book['num_pages'] }} pages</p>
+            <p class="text-muted fs-5">
+                by {{ book['author'] }}, {{ book['num_pages'] }} pages <span name="star" class="text-warning" value="{{ avg_rating }}"><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i></span>
+            </p>
             {% if session.get('user_id') != None %}
                 {% include 'book_btn.html' %}
             {% endif %}
@@ -35,18 +38,31 @@
     <div class="row my-3">
         <h3>Reviews</h3>
 
-        {% if session.get('user_id') != None and saved_books.get(book['id']) == 3 %}
+        {% if session.get('user_id') != None and session.get('user_id') not in reviewers and saved_books.get(book['id']) == 3 %}
         <div class="card border-sharp mb-3">
             <h5 class="card-header border-sharp">Write a review</h5>
             <div class="form-control card-body border-sharp">
                 <div class="fs-1 text-warning star-hover" id="star-hover" value=""><i class="bi bi-star" star="1"></i><i class="bi bi-star" star="2"></i><i class="bi bi-star" star="3"></i><i class="bi bi-star" star="4"></i><i class="bi bi-star" star="5"></i></div>
                 <textarea class="form-control" placeholder="review" id="review"></textarea>
                 <div class="d-flex justify-content-end mt-2">
-                    <button class="btn btn-block btn-secondary" id="review-submit"><span class="spinner-border spinner-border-sm d-none"></span> Submit</button>
+                    <button class="btn btn-block btn-secondary" id="review-submit" book_id="{{ book['id'] }}"><span class="spinner-border spinner-border-sm d-none"></span> Submit</button>
                 </div>
             </div>
         </div>
+        <script type="module" src="{{ url_for('static', filename='js/reviews.js') }}"></script>
         {% endif %}
+
+        {% if session.get('user_id') in reviewers %}
+        {% endif %}
+
+        {% for review in reviews if review['user_id'] != session.get('user_id') %}
+        <div class="card border-sharp mb-4">
+            <h5 class="card-header">{{ review['username'] }} rated it <span name="star" class="text-warning" value="{{ review['rating'] }}"><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i></span></h5>
+            <div class="card-body">
+                {{ review['review'] }}
+            </div>
+        </div>
+        {% endfor %}
         
         <!-- Template -->
         <!-- <div class="card border-sharp mb-2">
@@ -58,6 +74,5 @@
             </div>
         </div> -->
     </div>
-
-    <script src="{{ url_for('static', filename='js/reviews.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/ratings.js') }}"></script>
 {% endblock %}
